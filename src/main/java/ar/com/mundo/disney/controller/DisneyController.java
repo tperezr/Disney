@@ -1,6 +1,6 @@
 package ar.com.mundo.disney.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +16,7 @@ public class DisneyController {
 	PersonajeService personajeService;
 	
 	@GetMapping("/characters")
-	public ArrayList<Personaje> getPersonajes(){
-		
-		return null;
+	public List<Personaje> getPersonajes(){	
+		return personajeService.listarPersonajes();
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.com.mundo.disney.dao.PersonajeDao;
 import ar.com.mundo.disney.model.Personaje;
@@ -15,23 +16,24 @@ public class PersonajeServiceImpl implements PersonajeService {
 	private PersonajeDao personajeDao;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<Personaje> listarPersonajes() {
-		return null;
+		return (List<Personaje>) personajeDao.findAll();
 	}
 
 	@Override
 	public void guardar(Personaje personaje) {
-
+		personajeDao.save(personaje);
 	}
 
 	@Override
 	public void eliminar(Personaje personaje) {
-
+		personajeDao.delete(personaje);
 	}
 
 	@Override
-	public Personaje buscarPersonaje(Personaje personaje) {
-		return null;
+	public Personaje buscarPersonaje(Personaje personaje) {	
+		return personajeDao.findById(personaje.getIdPersonaje()).orElse(null);
 	}
 
 }
