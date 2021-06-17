@@ -22,16 +22,19 @@ public class PersonajeServiceImpl implements PersonajeService {
 	}
 
 	@Override
+	@Transactional
 	public void guardar(Personaje personaje) {
 		personajeDao.save(personaje);
 	}
 
 	@Override
+	@Transactional
 	public void eliminar(Personaje personaje) {
 		personajeDao.delete(personaje);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Personaje buscarPersonaje(Personaje personaje) {	
 		return personajeDao.findById(personaje.getIdPersonaje()).orElse(null);
 	}
