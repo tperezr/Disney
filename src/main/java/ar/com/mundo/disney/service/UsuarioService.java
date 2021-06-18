@@ -18,7 +18,6 @@ import ar.com.mundo.disney.model.Usuario;
 
 @Service("userDetailsService")
 public class UsuarioService implements UserDetailsService{
-	
 	@Autowired
 	UsuarioDao usuarioDao;
 	

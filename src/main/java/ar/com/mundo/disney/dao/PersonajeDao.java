@@ -1,9 +1,9 @@
 package ar.com.mundo.disney.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import ar.com.mundo.disney.model.Personaje;
 
-public interface PersonajeDao extends CrudRepository<Personaje, Long> {
+public interface PersonajeDao extends JpaRepository<Personaje, Long> {
 	
 }

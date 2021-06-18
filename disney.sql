@@ -165,6 +165,7 @@ CREATE TABLE `usuario` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
   `password` varchar(150) NOT NULL,
+  `email` varchar(65) NOT NULL,
   PRIMARY KEY (`id_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -175,7 +176,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'admin','$2a$10$DRhlscGKaNTgmJEHrmOrKeMuEeSDFkT87mgng69p6fyfeYX.ffQFe'),(2,'pepe','$2a$10$Rbw6y13k98HD9tqAqtsFYuXIEuxTt/ikVkfV.Mtt9mYKAAwIVmDjW'),(3,'juan','$2a$10$csrJ3PvTbTKev3HcOf3Ub.diAJ7PzFVwvyb6hMp7T6j.47rmukgUy');
+INSERT INTO `usuario` VALUES (1,'admin','$2a$10$DRhlscGKaNTgmJEHrmOrKeMuEeSDFkT87mgng69p6fyfeYX.ffQFe',''),(2,'pepe','$2a$10$Rbw6y13k98HD9tqAqtsFYuXIEuxTt/ikVkfV.Mtt9mYKAAwIVmDjW',''),(3,'juan','$2a$10$csrJ3PvTbTKev3HcOf3Ub.diAJ7PzFVwvyb6hMp7T6j.47rmukgUy','');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -188,4 +189,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-16 21:21:40
+-- Dump completed on 2021-06-18  0:03:36

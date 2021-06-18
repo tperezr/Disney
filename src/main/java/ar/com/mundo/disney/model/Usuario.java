@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
@@ -31,8 +32,12 @@ public class Usuario implements Serializable{
 	@NotEmpty
 	private String password;
 	
+	@Email
+	@NotEmpty
+	private String email;
+	
 	@OneToMany
 	@JoinColumn(name = "id_usuario")
-	private List<Rol> roles;
+	private List<Rol> roles;	
 
 }
