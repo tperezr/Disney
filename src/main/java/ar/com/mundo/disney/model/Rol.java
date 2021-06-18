@@ -1,7 +1,5 @@
 package ar.com.mundo.disney.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,9 +11,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Rol implements Serializable{
-	 
-	private static final long serialVersionUID = 1L;
+public class Rol {
 	
 	@Id
 	@Column(name = "id_usuario")

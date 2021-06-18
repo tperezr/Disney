@@ -12,5 +12,11 @@ public interface PersonajeService {
     
     public void eliminar(Personaje personaje);
     
-    public Personaje buscarPersonaje(Personaje personaje);
+    public Personaje buscarPersonaje(Long id);
+    
+    public Personaje buscarPorNombre(String nombre);
+	
+   	public List<Personaje> buscarPorEdad(Integer edad);
+   	
+   	public List<Personaje> buscarPorPeso(Integer peso);
 }

@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.mundo.disney.model.Usuario;
 
 @RestController
-@RequestMapping(name = "/auth")
+@RequestMapping("/auth")
 public class UserController {
 	
 	@PostMapping("/login")
 	public String login(Usuario usuario) {
-		return "log in successfull";
+		return "Log in successfull";
 	}
 	
 	@RequestMapping("/register")
 	public String register() {
-		return "it works";
+		return "Ok";
 	}
 }

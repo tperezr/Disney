@@ -13,4 +13,5 @@ public interface PeliculaService {
     public void eliminar(Pelicula pelicula);
     
     public Pelicula buscarPeliculaPorId(Long id);
+
 }

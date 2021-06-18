@@ -1,11 +1,12 @@
 package ar.com.mundo.disney.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,13 +20,14 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data
 @Entity
-public class Pelicula implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+public class Pelicula {
 	
 	@Id
 	@Column(name="id_pelicula")
@@ -45,7 +47,7 @@ public class Pelicula implements Serializable{
 	
 	private String imagen;
 	
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "pelicula_personaje",
 		joinColumns = @JoinColumn(name="id_pelicula"),

@@ -35,8 +35,23 @@ public class PersonajeServiceImpl implements PersonajeService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Personaje buscarPersonaje(Personaje personaje) {	
-		return personajeDao.findById(personaje.getIdPersonaje()).orElse(null);
+	public Personaje buscarPersonaje(Long id) {	
+		return personajeDao.findById(id).orElse(null);
+	}
+
+	@Override
+	public Personaje buscarPorNombre(String nombre) {
+		return personajeDao.findByNombre(nombre);
+	}
+
+	@Override
+	public List<Personaje> buscarPorEdad(Integer edad) {
+		return personajeDao.findByEdad(edad);
+	}
+
+	@Override
+	public List<Personaje> buscarPorPeso(Integer peso) {
+		return personajeDao.findByPeso(peso);
 	}
 
 }
