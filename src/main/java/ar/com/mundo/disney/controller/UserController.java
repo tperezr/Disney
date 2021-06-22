@@ -1,6 +1,8 @@
 package ar.com.mundo.disney.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,12 +13,12 @@ import ar.com.mundo.disney.model.Usuario;
 public class UserController {
 	
 	@PostMapping("/login")
-	public String login(Usuario usuario) {
+	public String login(@RequestBody Usuario usuario) {
 		return "Log in successfull";
 	}
 	
-	@RequestMapping("/register")
-	public String register() {
-		return "Ok";
+	@PostMapping("/register")
+	public ResponseEntity<Object> register(Usuario usuario) {
+		return ResponseEntity.accepted().body("Registro exitoso");
 	}
 }

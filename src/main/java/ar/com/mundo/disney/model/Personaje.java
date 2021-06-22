@@ -1,28 +1,32 @@
 package ar.com.mundo.disney.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Data;
 
 @Data
 @Entity
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id"
+		)
 public class Personaje {
 
 	@Id
 	@Column(name = "id_personaje")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idPersonaje;
+	private Long id;
 	
 	@NotEmpty
 	private String nombre;
@@ -38,7 +42,6 @@ public class Personaje {
 	
 	private String imagen;
 	
-	@ManyToMany(mappedBy = "personajes", fetch = FetchType.LAZY,
-			cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private Set<Pelicula> peliculas = new HashSet<Pelicula>();
+	@ManyToMany(mappedBy = "personajes")
+	private List<Pelicula> peliculas;
 }

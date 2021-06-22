@@ -1,8 +1,8 @@
 package ar.com.mundo.disney.service;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +16,6 @@ public class PersonajeServiceImpl implements PersonajeService {
 	
 	@Autowired
 	private PersonajeDao personajeDao;
-	
-	ModelMapper modelMapper = new ModelMapper();
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -39,28 +37,32 @@ public class PersonajeServiceImpl implements PersonajeService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Personaje buscarPersonaje(Long id) {	
-		return personajeDao.findById(id).get();
+	public Optional<Personaje> buscarPersonaje(Long id) {	
+		return personajeDao.findById(id);
 	}
 
 	@Override
-	public Personaje buscarPorNombre(String nombre) {
+	@Transactional(readOnly = true)
+	public Optional<Personaje> buscarPorNombre(String nombre) {
 		return personajeDao.findByNombre(nombre);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Personaje> buscarPorEdad(Integer edad) {
 		return personajeDao.findByEdad(edad);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Personaje> buscarPorPeso(Integer peso) {
 		return personajeDao.findByPeso(peso);
 	}
 	
 	@Override
-	public List<Personaje> buscarPorPeliculas(Long id) {
-		return personajeDao.findByPeliculas(id);
+	@Transactional(readOnly = true)
+	public List<Personaje> buscarPorPeliculas(List<Pelicula> peliculas) {
+		return personajeDao.findByPeliculasIn(peliculas);
 	}
 	
 	
