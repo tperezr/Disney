@@ -1,3 +1,4 @@
+/*
 package ar.com.mundo.disney.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -37,4 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.formLogin();
 	}
+	
 }
+*/

@@ -1,8 +1,7 @@
 package ar.com.mundo.disney.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,23 +20,20 @@ public class PeliculaController {
 	@Autowired
 	PeliculaService pelicuaService;
 	
-	@GetMapping()
+	@GetMapping
 	public List<PeliculaResponseDto> getPeliculas(){
-		List<Pelicula> peliculas = pelicuaService.listarPeliculas();
-		List<PeliculaResponseDto> response = new ArrayList<PeliculaResponseDto>();
-		
-		for (Pelicula pelicula : peliculas) {
-			response.add(new PeliculaResponseDto(
-					pelicula.getImagen(),
-					pelicula.getTitulo(),
-					pelicula.getFechaCreacion()
-					));
-		}
+		 
+		List<PeliculaResponseDto> response = pelicuaService.listarPeliculas().stream()
+				.map(element -> new PeliculaResponseDto(
+						element.getImagen(),
+						element.getTitulo(),
+						element.getFechaCreacion()
+						)).collect(Collectors.toList());
 	
 		return response;
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping(path = "/{id}")
 	public Pelicula getPeliculaPorId(@PathVariable Long id) {
 		return pelicuaService.buscarPeliculaPorId(id);
 	}

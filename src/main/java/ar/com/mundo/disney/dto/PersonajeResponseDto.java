@@ -9,8 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class PersonajeResponseDto {
 	
-	@NotEmpty
 	private String nombre;
-	
 	private String imagen;
 }

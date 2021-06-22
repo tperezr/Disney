@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,13 +19,12 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Pelicula {
 	
 	@Id
@@ -47,17 +45,22 @@ public class Pelicula {
 	
 	private String imagen;
 	
-	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(
 		name = "pelicula_personaje",
 		joinColumns = @JoinColumn(name="id_pelicula"),
 		inverseJoinColumns = @JoinColumn(name = "id_personaje")
 	)
-	private List<Personaje> personajes;
+	private List<Personaje> personajes;	
 	
 	@ManyToOne
 	@JoinColumn(name="id_genero")
 	private Genero genero;
+
+	public Pelicula(Long id) {
+		super();
+		this.id = id;
+	}	
 	
 }
 

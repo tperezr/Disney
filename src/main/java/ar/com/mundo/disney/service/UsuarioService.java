@@ -1,3 +1,4 @@
+/*
 package ar.com.mundo.disney.service;
 
 import java.util.ArrayList;
@@ -37,4 +38,4 @@ public class UsuarioService implements UserDetailsService{
 		
 		return new User(usuario.getUsername(), usuario.getPassword(), roles);
 	}
-}
+}*/

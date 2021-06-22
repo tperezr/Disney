@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import ar.com.mundo.disney.model.Pelicula;
 import ar.com.mundo.disney.model.Personaje;
 
 public interface PersonajeDao extends JpaRepository<Personaje, Long> {
@@ -13,4 +14,6 @@ public interface PersonajeDao extends JpaRepository<Personaje, Long> {
 	List<Personaje> findByEdad(Integer edad);
 	
 	List<Personaje> findByPeso(Integer peso);
+	
+	//List<Personaje> findByPeliculas(List<Pelicula> peliculas);
 }

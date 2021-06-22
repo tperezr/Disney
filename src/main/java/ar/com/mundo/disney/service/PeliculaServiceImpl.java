@@ -25,7 +25,6 @@ public class PeliculaServiceImpl implements PeliculaService {
 	@Transactional
 	public void guardar(Pelicula pelicula) {
 		peliculaDao.save(pelicula);
-
 	}
 
 	@Override
