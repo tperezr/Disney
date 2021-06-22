@@ -26,6 +26,11 @@ public class PersonajeController {
 	@Autowired
 	PersonajeService personajeService;
 	
+	@GetMapping("/test/{id}")
+	public List<Personaje> getTest(@PathVariable Long id) {
+		return personajeService.buscarPorPeliculas(id);
+	}
+	
 	@GetMapping
 	public List<PersonajeResponseDto> getPersonajess(){
 		List<PersonajeResponseDto> response = new ArrayList<PersonajeResponseDto>();

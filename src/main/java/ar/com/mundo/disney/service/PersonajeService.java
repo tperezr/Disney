@@ -22,5 +22,5 @@ public interface PersonajeService {
    	
    	public List<Personaje> buscarPorPeso(Integer peso);
    	
-   	//public List<Personaje> buscarPorPeliculas(List<Pelicula> peliculas);
+   	public List<Personaje> buscarPorPeliculas(Long id);
 }

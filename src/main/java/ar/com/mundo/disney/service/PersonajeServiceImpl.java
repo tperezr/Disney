@@ -57,12 +57,12 @@ public class PersonajeServiceImpl implements PersonajeService {
 	public List<Personaje> buscarPorPeso(Integer peso) {
 		return personajeDao.findByPeso(peso);
 	}
-	/*
+	
 	@Override
-	public List<Personaje> buscarPorPeliculas(List<Pelicula> peliculas) {
-		return personajeDao.findByPeliculas(peliculas);
+	public List<Personaje> buscarPorPeliculas(Long id) {
+		return personajeDao.findByPeliculas(id);
 	}
-	*/
+	
 	
 
 }

@@ -1,11 +1,14 @@
 package ar.com.mundo.disney.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,22 +48,17 @@ public class Pelicula {
 	
 	private String imagen;
 	
-	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(
 		name = "pelicula_personaje",
 		joinColumns = @JoinColumn(name="id_pelicula"),
 		inverseJoinColumns = @JoinColumn(name = "id_personaje")
 	)
-	private List<Personaje> personajes;	
+	private Set<Personaje> personajes = new HashSet<Personaje>();
 	
 	@ManyToOne
 	@JoinColumn(name="id_genero")
 	private Genero genero;
-
-	public Pelicula(Long id) {
-		super();
-		this.id = id;
-	}	
 	
 }
 
