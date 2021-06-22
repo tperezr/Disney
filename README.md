@@ -50,6 +50,7 @@ Los endpoints encargados de la autenticación deberán ser:
 El listado deberá mostrar:
   - Imagen.
   - Nombre.
+
 El endpoint deberá ser:
   - /characters
 
@@ -100,4 +101,5 @@ De forma opcional, se podrán agregar tests de los diferentes endpoints de la AP
 posibles escenarios de error:
   - Campos faltantes o con un formato inválido en BODY de las peticiones
   - Acceso a recursos inexistentes en endpoints de detalle
+
 Los tests pueden realizarse utilizando JUnit y Mockito.
