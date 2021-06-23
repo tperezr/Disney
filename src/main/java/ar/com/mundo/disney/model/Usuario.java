@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Usuario{
+public class Usuario {
 	
 	@Id
 	@Column(name = "id_usuario")

@@ -39,26 +39,33 @@ public class PersonajeController {
 	}
 	
 	@GetMapping(params = "name")
-	public Personaje getPersonajePorNombre(@RequestParam(value = "name") String nombre) {
+	public PersonajeDto getPersonajePorNombre(@RequestParam(value = "name") String nombre) {
 		Optional<Personaje> personaje = personajeService.buscarPorNombre(nombre);
-
-		return personaje.isEmpty() ? null : personaje.get();
+		
+		if(personaje.isEmpty()) {
+			return null;
+		}
+		
+		return createPersonajeDto(personaje.get());
 	}
 	
 	@GetMapping(params = "age")
-	public List<Personaje> getPersonajesPorEdad(@RequestParam(value = "age") Integer edad) {	
-		return personajeService.buscarPorEdad(edad);
+	public List<PersonajeDto> getPersonajesPorEdad(@RequestParam(value = "age") Integer edad) {	
+		return createPersonajesListDto(personajeService.buscarPorEdad(edad));
 	}
 	
 	@GetMapping(params = "weight")
-	public List<Personaje> getPersonajesPorPeso(@RequestParam(value = "weight") Integer peso) {
-		return personajeService.buscarPorPeso(peso);
+	public List<PersonajeDto> getPersonajesPorPeso(@RequestParam(value = "weight") Integer peso) {
+		return createPersonajesListDto(personajeService.buscarPorPeso(peso));
 	}
 	
 	@GetMapping(params = "movies")
 	public List<PersonajeDto> getPersonajesPorPeliculas(@RequestParam(value = "movies") Long idMovie) {
-		List<Pelicula> peliculas = List.of(new Pelicula(idMovie));
-		List<PersonajeDto> response = personajeService.buscarPorPeliculas(peliculas).stream()
+		return createPersonajesListDto(personajeService.buscarPorPeliculas(List.of(new Pelicula(idMovie)))); 
+	}
+	
+	private List<PersonajeDto> createPersonajesListDto(List<Personaje> personajes){
+		List<PersonajeDto> response = personajes.stream()
 				.map(personaje -> new PersonajeDto(
 						personaje.getId(),
 						personaje.getNombre(),
@@ -67,6 +74,17 @@ public class PersonajeController {
 						personaje.getHistoria(),
 						personaje.getImagen()
 						)).collect(Collectors.toList());
-		return response; 
+		return response;
+	}
+	
+	private PersonajeDto createPersonajeDto(Personaje personaje) {
+		return new PersonajeDto(
+				personaje.getId(),
+				personaje.getNombre(),
+				personaje.getEdad(),
+				personaje.getPeso(),
+				personaje.getHistoria(),
+				personaje.getImagen()
+				);
 	}
 }

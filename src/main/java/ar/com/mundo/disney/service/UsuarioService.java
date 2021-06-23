@@ -1,7 +1,7 @@
-/*
 package ar.com.mundo.disney.service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,17 +25,19 @@ public class UsuarioService implements UserDetailsService{
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = usuarioDao.findByUsername(username);
+		Optional<Usuario> usuario = usuarioDao.findByUsername(username);
 		
-		if(usuario == null) {
+		
+		if(usuario.isEmpty()) {
 			throw new UsernameNotFoundException(username);
 		}
 		ArrayList<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 		
-		for (Rol rol : usuario.getRoles()) {
+		for (Rol rol : usuario.get().getRoles()) {
 			roles.add(new SimpleGrantedAuthority(rol.getNombre()));
 		}
 		
-		return new User(usuario.getUsername(), usuario.getPassword(), roles);
+		return new User(usuario.get().getUsername(), usuario.get().getPassword(), roles);
 	}
-}*/
+	
+}
