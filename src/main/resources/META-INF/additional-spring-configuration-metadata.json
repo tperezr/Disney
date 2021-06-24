@@ -1,7 +1,0 @@
-{"properties": [
-  {
-    "name": "SENDGRID_API_KEY",
-    "type": "java.lang.String",
-    "description": "A description for 'SENDGRID_API_KEY'"
-  }
-]}

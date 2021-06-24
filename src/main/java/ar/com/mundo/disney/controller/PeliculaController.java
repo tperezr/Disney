@@ -6,12 +6,14 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import ar.com.mundo.disney.dto.PeliculaDto;
 import ar.com.mundo.disney.dto.PeliculaResponseDto;
 import ar.com.mundo.disney.model.Genero;
 import ar.com.mundo.disney.model.Pelicula;
@@ -44,21 +46,24 @@ public class PeliculaController {
 	}
 	
 	@GetMapping(params = "name")
-	public Pelicula getPeliculaPorNombre(@RequestParam(value = "name") String titulo) {
-		
+	public PeliculaDto getPeliculaPorNombre(@RequestParam(value = "name") String titulo) {
 		Optional<Pelicula> pelicula = peliculaService.buscarPeliculaPorTitulo(titulo);
+
+		if(pelicula.isPresent()) {
+			return createPeliculaDto(pelicula.get());
+		}
 		
-		return pelicula.isEmpty() ? null : pelicula.get();
+		return null;
 	}
 	
 	@GetMapping(params = "genre")
-	public List<Pelicula> getPeliculasPorGenero(@RequestParam(value = "genre") Long id){
-		Genero genero = new Genero(id);
-		return peliculaService.buscarPeliculasPorGenero(genero);
+	public List<PeliculaDto> getPeliculasPorGenero(@RequestParam(value = "genre") Long id){
+		return createPeliculasListDto(peliculaService
+				.buscarPeliculasPorGenero(new Genero(id)));
 	}
 	
 	@GetMapping(params = "order")
-	public List<Pelicula> getPeliculasPorFechaOrd(@RequestParam(value = "order")String order){
+	public List<PeliculaDto> getPeliculasPorFechaOrd(@RequestParam(value = "order")String order){
 		Sort.Direction ORDER;
 		order = order.toUpperCase();
 		
@@ -70,6 +75,26 @@ public class PeliculaController {
 			return null;
 		}
 		
-		return peliculaService.listarPeliculasOrdenadaPorFecha(Sort.by(ORDER,"fechaCreacion"));
+		return createPeliculasListDto(peliculaService
+				.listarPeliculasOrdenadaPorFecha(Sort.by(ORDER,"fechaCreacion")));
 	}
-} 
+	
+	private List<PeliculaDto> createPeliculasListDto(List<Pelicula> peliculas){
+		List<PeliculaDto> response = peliculas.stream()
+				.map(pelicula -> createPeliculaDto(pelicula))
+				.collect(Collectors.toList());
+		return response;
+	}
+	
+	private PeliculaDto createPeliculaDto(Pelicula pelicula) {
+		return new PeliculaDto(
+				pelicula.getId(),
+				pelicula.getTitulo(),
+				pelicula.getFechaCreacion(),
+				pelicula.getCalificacion(),
+				pelicula.getImagen(),
+				pelicula.getGenero().getNombre()
+				);
+	}
+}
+

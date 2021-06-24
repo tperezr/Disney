@@ -1,6 +1,8 @@
 package ar.com.mundo.disney.controller;
 
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import ar.com.mundo.disney.model.JwtRequestLogin;
 import ar.com.mundo.disney.model.RequestRegister;
 import ar.com.mundo.disney.service.UsuarioService;
 import ar.com.mundo.disney.util.JwtTokenUtil;
+import ar.com.mundo.disney.util.SengridMailSender;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,7 +34,8 @@ public class UserController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
-	//SengridMailSender sengridMailSender = new SengridMailSender();
+	@Autowired
+	SengridMailSender sengridMailSender;
 	
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@RequestBody JwtRequestLogin usuario) {
@@ -41,17 +45,17 @@ public class UserController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}		
 		
-		final UserDetails userDetails = usuarioService.loadUserByUsername(usuario.getUsername());
+		UserDetails userDetails = usuarioService.loadUserByUsername(usuario.getUsername());
 		
-		final String token = jwtTokenUtil.getToken(userDetails);
+		String token = jwtTokenUtil.getToken(userDetails);
 		
 		return ResponseEntity.ok(token);
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<Object> register(@RequestBody RequestRegister usuario) {
+	public Object register(@RequestBody RequestRegister usuario) throws IOException {
 		if(usuarioService.registrarUsuario(usuario)) {
-			
+			sengridMailSender.sendEmail(usuario).getStatusCode();
 			return ResponseEntity.ok("Registro exitoso");
 		}
 		

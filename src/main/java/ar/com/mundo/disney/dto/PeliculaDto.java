@@ -2,10 +2,13 @@ package ar.com.mundo.disney.dto;
 
 import java.util.Date;
 
-import ar.com.mundo.disney.model.Genero;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PeliculaDto {
 	
 	private Long id;
@@ -13,6 +16,5 @@ public class PeliculaDto {
 	private Date fechaCreacion;	
 	private Integer calificacion;
 	private String imagen;
-	private Genero genero;
-
+	private String genero;
 }

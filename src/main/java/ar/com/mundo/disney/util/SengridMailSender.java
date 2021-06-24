@@ -1,18 +1,19 @@
-/*package ar.com.mundo.disney.util;
+package ar.com.mundo.disney.util;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.sendgrid.*;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 
-import ar.com.mundo.disney.model.Usuario;
+import ar.com.mundo.disney.model.RequestRegister;
 import java.io.IOException;
 
+@Service
 public class SengridMailSender {
 	
-	@Value("${SENDGRID_API_KEY}")
-	String key;
-	
-	public Response sendEmail(Usuario usuario) throws IOException {
+	public Response sendEmail(RequestRegister usuario) throws IOException {
 		Email from = new Email("tomas.p.r7@gmail.com");
 	    String subject = "Bienvenido a Disney World";
 	    Email to = new Email(usuario.getEmail());
@@ -21,9 +22,7 @@ public class SengridMailSender {
 	    		+ "\nAhora podrás disfrutar de tus peliculas y series favoritas");
 	    Mail mail = new Mail(from, subject, to, content);
 	    
-	   
-	    
-	    SendGrid sg = new SendGrid(key);
+	    SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 	    Request request = new Request();
 	    Response response;
 	    try {
@@ -38,4 +37,3 @@ public class SengridMailSender {
 	}
 
 }
-*/

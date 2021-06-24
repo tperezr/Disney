@@ -54,7 +54,7 @@ public class JwtTokenUtil {
 				.setClaims(claims)
 				.setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 3600000))
+				.setExpiration(new Date(System.currentTimeMillis() + 3600000))//1hora
 				.signWith(key).compact();
 	}
 
