@@ -20,7 +20,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"You must have authorized");
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Missing or bad authentication");
 	}
 
 }

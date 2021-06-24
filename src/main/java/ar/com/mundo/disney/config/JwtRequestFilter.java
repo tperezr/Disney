@@ -18,9 +18,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import ar.com.mundo.disney.service.UsuarioService;
 import ar.com.mundo.disney.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
 	
 	@Autowired
@@ -42,17 +45,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			jwtToken = requestTokenHeader.substring(7);
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-			} catch (IllegalArgumentException e) {
-				System.out.println("Unable to get JWT Token");
-			} catch (ExpiredJwtException e) {
-				System.out.println("JWT Token has expired");
-			} catch (SignatureException e) {
-				System.out.println("JWT Token invalid");
+			} catch (IllegalArgumentException | ExpiredJwtException | SignatureException | MalformedJwtException e) {
+				log.warn(e.getMessage()); 
 			}
-		} else {
-			logger.warn("JWT Token does not begin with Bearer String");
-		}
-
+		} 
+		
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);

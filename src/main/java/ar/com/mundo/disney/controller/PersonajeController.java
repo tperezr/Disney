@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,13 @@ public class PersonajeController {
 		return response;
 	}
 	
+	@GetMapping("/{id}")
+	public Personaje getPersonajePorId(@PathVariable Long id) {
+		Optional<Personaje> personaje = personajeService.buscarPersonaje(id);
+		
+		return personaje.isPresent() ? personaje.get() : null;
+	}
+	
 	@GetMapping(params = "name")
 	public PersonajeDto getPersonajePorNombre(@RequestParam(value = "name") String nombre) {
 		Optional<Personaje> personaje = personajeService.buscarPorNombre(nombre);
@@ -66,14 +74,7 @@ public class PersonajeController {
 	
 	private List<PersonajeDto> createPersonajesListDto(List<Personaje> personajes){
 		List<PersonajeDto> response = personajes.stream()
-				.map(personaje -> new PersonajeDto(
-						personaje.getId(),
-						personaje.getNombre(),
-						personaje.getEdad(),
-						personaje.getPeso(),
-						personaje.getHistoria(),
-						personaje.getImagen()
-						)).collect(Collectors.toList());
+				.map(personaje -> createPersonajeDto(personaje)).collect(Collectors.toList());
 		return response;
 	}
 	

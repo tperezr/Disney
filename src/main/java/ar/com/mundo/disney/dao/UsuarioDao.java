@@ -9,5 +9,8 @@ import ar.com.mundo.disney.model.Usuario;
 
 @Repository
 public interface UsuarioDao extends JpaRepository<Usuario, Long>{
+	
 	Optional<Usuario> findByUsername(String username);
+	
+	Optional<Usuario> findByEmail(String email);
 }

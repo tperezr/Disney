@@ -18,12 +18,10 @@ import io.jsonwebtoken.security.Keys;
 public class JwtTokenUtil {
 	private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-	//retrieve username from jwt token
 	public String getUsernameFromToken(String token) {
 		return getClaimFromToken(token, Claims::getSubject);
 	}
 
-	//retrieve expiration date from jwt token
 	public Date getExpirationDateFromToken(String token) {
 		return getClaimFromToken(token, Claims::getExpiration);
 	}
@@ -32,7 +30,7 @@ public class JwtTokenUtil {
 		final Claims claims = getAllClaimsFromToken(token);
 		return claimsResolver.apply(claims);
 	}
-    //for retrieveing any information from token we will need the secret key
+	
 	private Claims getAllClaimsFromToken(String token) {
 		return Jwts.parserBuilder()
 				.setSigningKey(key)
@@ -40,33 +38,26 @@ public class JwtTokenUtil {
 				.parseClaimsJws(token).getBody();
 	}
 
-	//check if the token has expired
 	private Boolean isTokenExpired(String token) {
 		final Date expiration = getExpirationDateFromToken(token);
 		return expiration.before(new Date());
 	}
 
-	//generate token for user
-	public String generateToken(UserDetails userDetails) {
+	public String getToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
-		return doGenerateToken(claims, userDetails.getUsername());
+		return generateToken(claims, userDetails.getUsername());
 	}
 
-	//while creating the token -
-	//1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
-	//2. Sign the JWT using the HS512 algorithm and secret key.
-	//3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
-	//   compaction of the JWT to a URL-safe string 
-	private String doGenerateToken(Map<String, Object> claims, String subject) {
+	
+	private String generateToken(Map<String, Object> claims, String subject) {
 		return Jwts.builder()
 				.setClaims(claims)
 				.setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+				.setExpiration(new Date(System.currentTimeMillis() + 3600000))
 				.signWith(key).compact();
 	}
 
-	//validate token
 	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

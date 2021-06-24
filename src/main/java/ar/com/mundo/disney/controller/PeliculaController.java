@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,9 +37,10 @@ public class PeliculaController {
 		return response;
 	}
 	
-	@GetMapping("/details")
-	public List<Pelicula> getPeliculasDetails(){
-		return peliculaService.listarPeliculas();
+	@GetMapping("/{id}")
+	public Pelicula getPeliculasDetails(@PathVariable Long id){
+		Optional<Pelicula> pelicula = peliculaService.buscarPeliculaPorId(id);
+		return pelicula.isPresent() ? pelicula.get() : null;
 	}
 	
 	@GetMapping(params = "name")

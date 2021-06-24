@@ -13,10 +13,14 @@ import javax.validation.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "id"
@@ -27,21 +31,11 @@ public class Personaje {
 	@Column(name = "id_personaje")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotEmpty
 	private String nombre;
-	
-	@NotEmpty
 	private Integer edad;
-	
-	@NotEmpty
 	private Integer peso;
-	
-	@NotEmpty
 	private String historia;
-	
 	private String imagen;
-	
 	@ManyToMany(mappedBy = "personajes")
 	private List<Pelicula> peliculas;
 }
