@@ -53,7 +53,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/register")
-	public Object register(@RequestBody RequestRegister usuario) throws IOException {
+	public ResponseEntity<Object> register(@RequestBody RequestRegister usuario) throws IOException {
 		if(usuarioService.registrarUsuario(usuario)) {
 			sengridMailSender.sendEmail(usuario).getStatusCode();
 			return ResponseEntity.ok("Registro exitoso");

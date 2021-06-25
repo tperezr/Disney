@@ -40,6 +40,7 @@ public class UsuarioService implements UserDetailsService{
 		return new User(usuario.get().getUsername(), usuario.get().getPassword(), new ArrayList<GrantedAuthority>());
 	}
 	
+	@Transactional
 	public Boolean registrarUsuario(RequestRegister requestRegister) {
 		
 		boolean existeUsername = usuarioDao.findByUsername(requestRegister.getUsername()).isPresent();
